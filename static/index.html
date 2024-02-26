@@ -1,0 +1,43 @@
+<!DOCTYPE html> <!-- 声明文档类型为HTML5 -->
+<html>
+<head>
+    <title>A + B Calculator</title> <!-- 设置网页标题为“A + B Calculator” -->
+</head>
+<body>
+    <h2>A + B Calculator</h2> <!-- 显示页面的主标题 -->
+    <!-- 提供两个输入框让用户输入数字，分别有占位符提示“Enter a”和“Enter b” -->
+    <input type="number" id="a" placeholder="Enter a">
+    <input type="number" id="b" placeholder="Enter b">
+    <!-- 提供一个按钮，当点击时会调用calculate()函数 -->
+    <button onclick="calculate()">Calculate</button>
+    <!-- 显示计算结果的段落，结果将被设置到这里的<span>标签内 -->
+    <p>Result: <span id="result"></span></p>
+
+    <script>
+        function calculate() {
+            // 从输入框中获取用户输入的值，并转换为整数
+            const a = parseInt(document.getElementById('a').value);
+            const b = parseInt(document.getElementById('b').value);
+
+            // 向服务器发送POST请求，请求的URL是'http://127.0.0.1:5000/add, 即后端程序的端口'
+            fetch('http://127.0.0.1:5000/add', {
+                method: 'POST', // 指定请求方法为POST
+                headers: {
+                    'Content-Type': 'application/json', // 设置请求头，告知服务器请求体格式为JSON
+                },
+                body: JSON.stringify({a: a, b: b}), // 将请求的数据转换为JSON字符串
+            })
+
+            .then(response => response.json()) // 解析响应数据为JSON
+            .then(data => {
+                // 将计算结果显示在页面上
+                document.getElementById('result').innerText = data.result;
+            })
+            .catch((error) => {
+                // 如果请求失败，打印错误信息到控制台
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
