@@ -14,3 +14,5 @@ pip install -U flask-cors
 python app.py
 ```
 默认是5000端口, 访问`http://127.0.0.1:5000/`即可
+
+![video](https://www.bilibili.com/video/BV18r421W7ed?t=0.4)
